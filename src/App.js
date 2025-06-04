@@ -10,7 +10,12 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <News />
+      {/* <marquee style={{ fontSize: "30px", color: "grey" }}>
+        Breaking News
+      </marquee> */}
+      <div className="textdiv">Breaking News</div>
+
+      <News category="general" />
       <Footer />
     </div>
   );

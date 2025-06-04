@@ -1,7 +1,23 @@
 .App {
   text-align: center;
 }
+.textdiv {
+  font-size: 20px;
+  color: #691f0c;
+  font-weight: bold;
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 9s linear infinite;
+}
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

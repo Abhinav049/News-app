@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 
 export class News extends Component {
   constructor() {
@@ -7,16 +8,17 @@ export class News extends Component {
 
     this.state = {
       articles: [],
-      loading: false,
+      loading: true,
       currentPage: 1,
-      newsPerPage: 12,
+      newsPerPage: 9,
     };
   }
 
   async componentDidMount() {
-    let url =
-      "https://newsapi.org/v2/everything?q=apple&from=2025-06-01&to=2025-06-01&sortBy=popularity&apiKey=6c0e1c67f5d64bf4b9898ad13d82b0b5";
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=6c0e1c67f5d64bf4b9898ad13d82b0b5`;
+    this.setState({ loading: true });
     let data = await fetch(url);
+
     let parsedData = await data.json();
 
     this.setState({
@@ -37,6 +39,7 @@ export class News extends Component {
   };
 
   handleNextClick = () => {
+    // this.setState({ loading: true });
     const totalPages = Math.ceil(
       this.state.articles.length / this.state.newsPerPage
     );
@@ -47,6 +50,7 @@ export class News extends Component {
       () => {
         window.scrollTo(0, 0);
       }
+      // this.setState({ loading: false })
     );
   };
 
@@ -61,30 +65,32 @@ export class News extends Component {
 
     return (
       <div className="container my-3">
+        {this.state.loading && <Spinner />}
         <div className="row">
-          {(currentArticles || []).map((element) => {
-            return (
-              <div
-                className="col-sm my-2"
-                key={element.url}
-                style={{ display: "flex" }}
-              >
-                <div style={{ flex: 1, height: "100%" }}>
-                  <NewsItem
-                    title={element.title.slice(0, 68) + "..."}
-                    description={
-                      element.description
-                        ? element.description.slice(0, 133) +
-                          (element.description.length > 133 ? "..." : "")
-                        : ""
-                    }
-                    imageurl={element.urlToImage}
-                    url={element.url}
-                  />
+          {!this.state.loading &&
+            (currentArticles || []).map((element) => {
+              return (
+                <div
+                  className="col-sm my-2"
+                  key={element.url}
+                  style={{ display: "flex" }}
+                >
+                  <div style={{ flex: 1, height: "100%" }}>
+                    <NewsItem
+                      title={element.title.slice(0, 68) + "..."}
+                      description={
+                        element.description
+                          ? element.description.slice(0, 133) +
+                            (element.description.length > 133 ? "..." : "")
+                          : ""
+                      }
+                      imageurl={element.urlToImage}
+                      url={element.url}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
         <div className="d-flex justify-content-between my-3">
           <button

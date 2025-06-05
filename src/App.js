@@ -5,19 +5,46 @@ import "./App.css";
 import Navbar from "./components/nav";
 import News from "./components/News";
 import Footer from "./components/footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      {/* <marquee style={{ fontSize: "30px", color: "grey" }}>
-        Breaking News
-      </marquee> */}
-      <div className="textdiv">Breaking News</div>
+    <BrowserRouter>
+      <div className="App">
+        <Navbar />
+        <div className="textdiv">Breaking News</div>
+        <Routes>
+          <Route path="/" element={<News key="/" category={"general"} />} />
+          <Route
+            path="/home"
+            element={<News key="general" category={"general"} />}
+          />
+          <Route
+            path="/sports"
+            element={<News key="sports" category={"sports"} />}
+          />
+          <Route
+            path="/science"
+            element={<News key="science" category={"science"} />}
+          />
+          <Route
+            path="/health"
+            element={<News key="health" category={"health"} />}
+          />
 
-      <News category="general" />
-      <Footer />
-    </div>
+          <Route
+            path="/technology"
+            element={<News key="technology" category={"technology"} />}
+          />
+          <Route
+            path="/business"
+            element={<News key="business" category={"business"} />}
+          />
+        </Routes>
+
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 

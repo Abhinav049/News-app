@@ -85,6 +85,17 @@ export class News extends Component {
                           : ""
                       }
                       imageurl={element.urlToImage}
+                      author={
+                        element.author ? element.author : "Unknown Author"
+                      }
+                      source={element.source.name}
+                      publishedAt={new Date(
+                        element.publishedAt
+                      ).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
                       url={element.url}
                     />
                   </div>
